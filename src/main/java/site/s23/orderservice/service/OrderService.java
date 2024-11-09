@@ -43,8 +43,17 @@ public class OrderService {
 	}
 
 	public List<OrderDetailsDTO> fetchAllOrders() {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Orders> orders = orderRepo.findAll();
+		
+		return orders.stream().map(order -> {
+							List<FoodItemDTO> foodItemDetails = getFoodItemDetails(order.getFoodItems());
+							RestaurantDTO restaurant = getRestaurantInfoById(order.getRestaurantId());
+							UserDTO user = getUserInfoById(order.getUserId());
+							OrderDetailsDTO orderDetails = new OrderDetailsDTO(order.getId(), order.getOrderId(), foodItemDetails, restaurant, user);
+							return orderDetails;
+					}).collect(Collectors.toList());
+		
 	}
 	
 	private List<FoodItemDTO> getFoodItemDetails(List<Integer> foodItems) {

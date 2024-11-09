@@ -13,7 +13,6 @@ public class UserDTO {
 	String username;
 	String firstName;
 	String lastName;
-	String password;
 	String address;
 	boolean isActive;
 	
